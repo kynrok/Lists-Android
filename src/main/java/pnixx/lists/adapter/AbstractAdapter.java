@@ -40,6 +40,7 @@ public abstract class AbstractAdapter<Row, Holder extends AbstractHolder<Row>> e
 		instance = this;
 	}
 
+	//Стандартный конструктор
 	public AbstractAdapter(Context context, int res, ArrayList<Row> objects, PageScrolling scrolling) {
 		super(context, res, objects);
 		this.context = context;

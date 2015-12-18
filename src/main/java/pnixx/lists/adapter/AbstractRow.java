@@ -18,20 +18,18 @@ import pnixx.lists.annotation.Json;
 public abstract class AbstractRow {
 
 	//Пустой конструктор
-	public AbstractRow() {
-
-	}
+	public AbstractRow() {}
 
 	//Constructor
 	public AbstractRow(JSONObject r) throws JSONException {
-		parse(this.getClass(), r);
+		parse(r);
 	}
 
 	//Парсинг
-	private void parse(Class<?> c, JSONObject r) throws JSONException {
+	protected final void parse(JSONObject r) throws JSONException {
 
 		//Получаем список полей
-		Field[] fields = c.getFields();
+		Field[] fields = this.getClass().getFields();
 
 		//Проходим по списку
 		for( Field field : fields ) {

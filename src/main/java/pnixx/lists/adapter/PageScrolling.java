@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 public class PageScrolling implements AbsListView.OnScrollListener {
 	private boolean mIsScrolling;
 	private ArrayAdapter<?> adapter;
-	private Context context;
+	private final Context context;
 
 	public PageScrolling(Context context) {
 		this.context = context;
