@@ -26,7 +26,7 @@ public abstract class AbstractRow {
 	}
 
 	//Парсинг
-	protected final void parse(JSONObject r) throws JSONException {
+	protected void parse(JSONObject r) throws JSONException {
 
 		//Получаем список полей
 		Field[] fields = this.getClass().getFields();
