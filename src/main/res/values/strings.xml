@@ -1,3 +1,5 @@
 <resources>
 	<string name="app_name">Lists</string>
+
+	<string name="footer_loading">loading…</string>
 </resources>
