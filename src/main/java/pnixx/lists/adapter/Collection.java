@@ -29,9 +29,7 @@ public final class Collection<T extends AbstractRow> extends ArrayList<T> {
 
 			//Проходим по списку элементов
 			for(int i = 0; i < r.length(); i++) {
-				T row = newInstance(r.getJSONObject(i));
-				row.parse(r.getJSONObject(i));
-				add(row);
+				add(newInstance(r.getJSONObject(i)));
 			}
 
 		} catch(Exception e) {
@@ -40,9 +38,7 @@ public final class Collection<T extends AbstractRow> extends ArrayList<T> {
 	}
 
 	private T newInstance(JSONObject r) throws JSONException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-		T row = clazz.newInstance();
-		row.parse(r);
-		return row;
+		return clazz.getConstructor(JSONObject.class).newInstance(r);
 	}
 
 	//Добавление в список
@@ -50,9 +46,7 @@ public final class Collection<T extends AbstractRow> extends ArrayList<T> {
 		try {
 			//Проходим по списку элементов
 			for(int i = 0; i < r.length(); i++) {
-				T row = newInstance(r.getJSONObject(i));
-				row.parse(r.getJSONObject(i));
-				add(row);
+				add(newInstance(r.getJSONObject(i)));
 			}
 		} catch(Exception e) {
 			throw new AndroidRuntimeException("Unable to instantiate collection " + clazz.getName(), e);

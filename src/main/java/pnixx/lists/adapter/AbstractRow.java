@@ -2,10 +2,14 @@ package pnixx.lists.adapter;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 
 import pnixx.lists.annotation.Json;
 
@@ -39,11 +43,41 @@ public abstract class AbstractRow {
 				Object value = r.isNull(key) ? null : r.get(key);
 				try {
 					if( value != null ) {
-						field.set(this, value);
+
+						//Если указано создание массива с классом
+						if( ArrayList.class.isAssignableFrom(field.getType()) ) {
+							ArrayList rows = (ArrayList) field.getType().newInstance();
+							JSONArray array = (JSONArray) value;
+							Class clz = (Class) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0];
+							for( int i = 0; i < array.length(); i++ ) {
+								rows.add(clz.getConstructor(JSONObject.class).newInstance(array.get(i)));
+							}
+							field.set(this, rows);
+							continue;
+						}
+
+						try {
+							//Пробуем в лоб инициализировать класс
+							field.set(this, field.getType().getConstructor(value.getClass()).newInstance(value));
+						} catch(NoSuchMethodException e) {
+
+							//Если у поля указан тип строки
+							if( String.class.isAssignableFrom(field.getType()) ) {
+								field.set(this, String.valueOf(value));
+							} else {
+								field.set(this, value);
+							}
+						}
 					}
 				} catch( IllegalArgumentException e ) {
 					Log.e("Row", e.getMessage() + ": " + key + "=" + value, e);
 				} catch( IllegalAccessException e ) {
+					Log.e("Row", e.getMessage(), e);
+				} catch(InstantiationException e) {
+					Log.e("Row", e.getMessage(), e);
+				} catch(NoSuchMethodException e) {
+					Log.e("Row", e.getMessage(), e);
+				} catch(InvocationTargetException e) {
 					Log.e("Row", e.getMessage(), e);
 				}
 			}
