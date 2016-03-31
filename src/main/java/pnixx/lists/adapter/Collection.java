@@ -38,7 +38,13 @@ public final class Collection<T extends AbstractRow> extends ArrayList<T> {
 	}
 
 	private T newInstance(JSONObject r) throws JSONException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-		return clazz.getConstructor(JSONObject.class).newInstance(r);
+		try {
+			return clazz.getConstructor(JSONObject.class).newInstance(r);
+		} catch( NoSuchMethodException e ) {
+			T row = clazz.newInstance();
+			row.parse(r);
+			return row;
+		}
 	}
 
 	//Добавление в список
