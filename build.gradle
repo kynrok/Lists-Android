@@ -1,19 +1,8 @@
-buildscript {
-	repositories {
-		jcenter()
-		maven { url "http://dl.bintray.com/pnixx/maven" }
-	}
-
-	dependencies {
-		classpath 'com.android.tools.build:gradle:2.0.0'
-	}
-}
-
 apply plugin: 'com.android.library'
 
 android {
 	compileSdkVersion 23
-	buildToolsVersion "23.0.3"
+	buildToolsVersion "24.0.0"
 
 	defaultConfig {
 		minSdkVersion 15
@@ -24,8 +13,5 @@ android {
 }
 
 dependencies {
-	compile fileTree(dir: 'libs', include: ['*.jar'])
-	compile 'com.android.support:support-v4:23.3.0'
+	compile 'com.android.support:support-v4:23.+'
 }
-
-apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'

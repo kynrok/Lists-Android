@@ -80,11 +80,12 @@ public abstract class FragmentListAdapter<Row extends AbstractRow> extends ListF
 		removeFooterLoader();
 
 		//Если первая страница и были данные
-		if( page == 1 && rows.size() > 0 ) {
-			rows.clear();
-		}
+		//	if( page == 1 && rows.size() > 0 ) {
+		rows.clear();
+		//}
 
 		//Добавляем строки
+
 		rows.append(r);
 		adapter.notifyDataSetChanged();
 	}
@@ -105,16 +106,16 @@ public abstract class FragmentListAdapter<Row extends AbstractRow> extends ListF
 
 	//Устанавливаем коллбек на прокрутку страницы
 	protected void setCallbackOnEndPageTrack() {
-		if( isActive ) {
-			adapter.setOnEndPage(new AbstractAdapter.OnEndPage() {
-				@Override
-				public void run() {
-					super.run();
-					page += 1;
-					addFooterLoader();
-					getPage();
-				}
-			});
-		}
+//		if( isActive ) {
+//			adapter.setOnEndPage(new AbstractAdapter.OnEndPage() {
+//				@Override
+//				public void run() {
+//					super.run();
+//					page += 1;
+//					addFooterLoader();
+//					getPage();
+//				}
+//			});
+//		}
 	}
 }
